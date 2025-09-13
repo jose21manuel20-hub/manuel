@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository # Paso 1: Descargar el código fuente del repositorio
+      - name: Checkout repository # Paso 1: Descargar cejota
         uses: actions/checkout@v3
 
       - name: Use Node.js 22 # Paso 2: Configurar Node.js
