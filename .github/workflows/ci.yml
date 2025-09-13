@@ -39,8 +39,6 @@ jobs:
 
       - name: Push Docker image to Docker Hub # Paso 8: Subir la imagen a Docker Hub
         # Renombrar la imagen local con el nombre de formato usuario/imagen:tag
-        run: |
-          # Renombrar la imagen local con el nombre de formato usuario/imagen:tag
-          docker tag cejota ${{ secrets.DOCKER_USERNAME }}/cejota:latest
-          # Subir la imagen renombrada a docker hub
-          docker push ${{ secrets.DOCKER_USERNAME }}/cejota:latest
+        run: docker tag cejota ${{ secrets.DOCKER_USERNAME }}/cejota:latest
+        # Subir la imagen renombrada a docker hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/cejota:latest
