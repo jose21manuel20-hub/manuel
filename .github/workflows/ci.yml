@@ -28,7 +28,7 @@ jobs:
         run: npm run build -- --prod
 
       - name: Build Docker image # Paso 6: Construir la imagen Docker
-        run: docker build -t cejota .
+        run: docker build --build-arg NODE_VERSION=22 -t cejota .
 
       - name: Log in to Docker Hub # Paso 7: Iniciar sesión en Docker Hub
         uses: docker/login-action@v2
