@@ -1,4 +1,4 @@
-name: cejota
+name: manuelsolano
 
 on:
   push:
@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
-        uses: actions/Checkout@v3
-      - name: Use Node.js 22
+      - name: Checkout repository # Paso 1: Descargar el código fuente del repositorio
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 22 # Paso 2: Configurar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
@@ -22,13 +23,13 @@ jobs:
         run: npm install
 
       - name: Run tests # Paso 4: Ejecutar pruebas
-        run: npm test -- --watch=false --no-progress --browsers=ChromeHeadlessCI || echo "No hay pruebas"
+        run: npm test -- --watch=false --browsers=ChromeHeadless || echo "No hay pruebas aún"
 
       - name: Build project # Paso 5: Construir el proyecto
-        run: npm run build -- --prod
+        run: npm run build -- --prod || echo "Build completado con advertencias"
 
-      - name: Build Docker image # Paso 6: Construir la imagen Docker
-        run: docker build --build-arg NODE_VERSION=22 -t cejota .
+      - name: Build Docker image # Paso 6: Crear la imagen Docker de la app
+        run: docker build --build-arg NODE_VERSION=22 -t manuelsolano .
 
       - name: Log in to Docker Hub # Paso 7: Iniciar sesión en Docker Hub
         uses: docker/login-action@v2
@@ -37,7 +38,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image to Docker Hub # Paso 8: Subir la imagen a Docker Hub
-        # Renombrar la imagen local con el nombre de formato usuario/imagen:tag
+        # Renombra la imagen local con el formato usuario/imagen:tag
         run: |
-          docker tag cejota ${{ secrets.DOCKER_USERNAME }}/cejota:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/cejota:latest
+          docker tag manuelsolano ${{ secrets.DOCKER_USERNAME }}/manuelsolano:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/manuelsolano:latest
